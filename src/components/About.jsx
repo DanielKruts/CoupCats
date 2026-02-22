@@ -28,7 +28,7 @@ const About = () =>
             </div>
 
             <div className="details-image">
-              <img src="/images/catWaraMeme.jpg" alt="Political analysis visual" />
+              <img src="/images/ThailandCoup.jpg" alt="Political analysis visual" />
             </div>
           </div>
         </section>
@@ -36,7 +36,7 @@ const About = () =>
         <section className="why-section">
           <div className="why-container">
             <div className="why-image">
-              <img src="/images/catWaraMeme.jpg" alt="Why we do what we do" />
+              <img src="/images/Armored Take.jpg" alt="Why we do what we do" />
             </div>
 
             <div className="why-text">
@@ -47,6 +47,41 @@ const About = () =>
             </div>
           </div>
         </section>
+        <section className="decision-section">
+          <section className="decision-section">
+
+          <div className="decision-header">
+            <h2>Main Decision-Making Factors</h2>
+              <p>
+                Our forecasts are guided by a balance of data, context, and expert analysis.
+              </p>
+          </div>
+
+        </section>
+          <div className="decision-container">
+            <div className="decision-card">
+              <h3>Main Factor One</h3>
+              <p>
+                Filler text
+              </p>
+            </div>
+
+          <div className="decision-card">
+            <h3>Main factor two</h3>
+            <p>
+              Filler text 
+            </p>
+          </div>
+
+          <div className="decision-card">
+            <h3>Main factor three</h3>
+            <p>
+              Filler text
+            </p>
+          </div>
+          </div>
+        </section>
+        
       </div>
     );
   };

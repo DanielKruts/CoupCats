@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ZoomableGroup, ComposableMap, Geographies, Geography } from 'react-simple-maps';
+import Globe3D from './Globe3D';
 import "./Map.css";
 import { countryToContinent, continentZoomData } from "../ContinentData";
 import { ClipLoader } from 'react-spinners';
@@ -109,6 +109,7 @@ const Map = ({ externalSelectedCountry, onClearSearch, setGlobalLabelPosition, s
   const [showInstructions, setShowInstructions] = useState(true);
   const [maxPredictionProb, setMaxPredictionProb] = useState(0.05); // Set a default max probability of 0.05
   const [rankingPanelExpanded, setRankingPanelExpanded] = useState(false);
+  const [resetTrigger, setResetTrigger] = useState(0);
 
 
   const toggleInstructions = () => {
@@ -506,6 +507,7 @@ const Map = ({ externalSelectedCountry, onClearSearch, setGlobalLabelPosition, s
     setTargetZoom(1.3);
     setSliderValues({}); // Clear slider values
     setCountrySliders({}); // Clear country-specific sliders
+    setResetTrigger(prev => prev + 1);
   };
 
 
@@ -572,102 +574,19 @@ const Map = ({ externalSelectedCountry, onClearSearch, setGlobalLabelPosition, s
   return (
     <div className="MapContainer" onMouseMove={handleMouseMove}>
       <div className="map-box">
-        <div className="map-wrapper" onClick={handleMapClick}>
-          <ComposableMap width={1000} projectionConfig={{ scale: 140 }}>
-            <ZoomableGroup center={mapCenter}
-              zoom={zoomLevel}
-              minZoom={1.30}
-              maxZoom={4.00}
-              translateExtent={[[137, 55], [986, 520]]}
-              filterZoomEvent={(event) => event.type !== "wheel" || event.type.startsWith('touch') || !locked}
-              onMoveEnd={({ zoom, coordinates }) => {
-                setTargetZoom(zoom);
-                setZoomLevel(zoom);
-                setTargetCenter(coordinates);
-                setMapCenter(coordinates);
-              }}>
-              <Geographies geography="/map.json">
-                {({ geographies }) => {
-                  const selectedGeo = geographies.find((geo) => geo.properties.name === selectedCountry);
-                  const otherGeographies = geographies.filter((geo) => geo.properties.name !== selectedCountry);
-                  return (
-                    <>
-                      {otherGeographies.map((geo) => {
-                        const d = data.find((s) => s['country'] === geo.properties.name);
-                        let prob = -1;
-                        if (d) {
-                          prob = d['prediction_prob'];
-                        }
-                        return (
-                          <Geography
-                            key={geo.rsmKey}
-                            geography={geo}
-                            onClick={(event) => {
-                              event.stopPropagation();
-                              handleCountryClick(geo);
-                            }}
-                            onMouseEnter={() => setGlobalHoveredCountry(geo.properties.name)}
-                            onMouseLeave={() => setGlobalHoveredCountry(null)}
-                            style={{
-                              default: {
-                                fill: colorScale(prob, maxPredictionProb),
-                                stroke: "#607D8B",
-                                strokeWidth: 0.1,
-                                strokeLinejoin: "round",
-                                strokeLinecap: "round",
-                                pointerEvents: "fill"
-                              },
-                              hover: {
-                                fill: colorScale(prob, maxPredictionProb),
-                                stroke: "#000",
-                                strokeWidth: 0.3,
-                                strokeLinejoin: "round",
-                                strokeLinecap: "round",
-                              },
-                              pressed: { fill: colorScale(prob, maxPredictionProb), outline: "none" },
-                            }}
-                          />
-                        );
-                      })}
-                      {selectedGeo && (
-                        <Geography
-                          key={selectedGeo.rsmKey}
-                          geography={selectedGeo}
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            handleCountryClick(selectedGeo);
-                          }}
-                          onMouseEnter={() => setGlobalHoveredCountry(geo.properties.name)}
-                          onMouseLeave={() => setGlobalHoveredCountry(null)}
-                          style={{
-                            default: {
-                              fill: colorScale(prob, maxPredictionProb),
-                              stroke: "#000",
-                              strokeWidth: 0.3,
-                              strokeLinejoin: "round",
-                              strokeLinecap: "round",
-                              pointerEvents: "fill",
-                              filter: "drop-shadow(0px 0px 3px rgba(0,0,0,0.5))",
-                            },
-                            hover: {
-                              fill: colorScale(prob, maxPredictionProb),
-                              stroke: "#000",
-                              strokeWidth: 0.3,
-                              strokeLinejoin: "round",
-                              strokeLinecap: "round",
-                              pointerEvents: "fill",
-                              filter: "drop-shadow(0px 0px 3px rgba(0,0,0,0.5))",
-                            },
-                            pressed: { fill: colorScale(prob, maxPredictionProb), outline: "none" },
-                          }}
-                        />
-                      )}
-                    </>
-                  );
-                }}
-              </Geographies>
-            </ZoomableGroup>
-          </ComposableMap>
+        <div className="map-wrapper" style={{ height: '685px' }}>
+          <Globe3D
+            data={data}
+            maxPredictionProb={maxPredictionProb}
+            selectedCountry={selectedCountry}
+            onCountryClick={handleCountryClick}
+            onCountryHover={(name) => setGlobalHoveredCountry(name)}
+            onBackgroundClick={() => {
+              setSelectedCountry(null);
+              setGlobalHoveredCountry(null);
+            }}
+            resetTrigger={resetTrigger}
+          />
         </div>
 
         {/* Help Button */}
@@ -746,114 +665,10 @@ const Map = ({ externalSelectedCountry, onClearSearch, setGlobalLabelPosition, s
           </div>
         )}
 
-        {/* Zoom Controls on the left side */}
         <div
           style={{
             position: 'absolute',
             top: '250px',
-            left: '10px',
-            width: '40px',
-            height: '40px',
-            backgroundColor: 'rgba(255,255,255,0.9)',
-            boxShadow: '2px 2px 5px rgba(0,0,0,0.3)',
-            zIndex: 1000,
-            cursor: 'pointer',
-          }}
-          onClick={() => {
-            if (targetZoom < 4) {
-              setManualZoom(false);
-              setTargetZoom(targetZoom + 0.2);
-            }
-          }}
-        >
-          <div
-            style={{
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 'bold',
-              fontSize: '1.7rem',
-              color: targetZoom >= 4 ? '#888' : '#000',
-              userSelect: 'none',
-            }}
-          >
-            +
-          </div>
-        </div>
-
-        <div
-          style={{
-            position: 'absolute',
-            top: '300px',
-            left: '10px',
-            width: '40px',
-            height: '40px',
-            backgroundColor: 'rgba(255,255,255,0.9)',
-            boxShadow: '2px 2px 5px rgba(0,0,0,0.3)',
-            zIndex: 1000,
-            cursor: 'pointer',
-          }}
-          onClick={() => {
-            if (targetZoom > 1.3) {
-              setManualZoom(false);
-              setTargetZoom(targetZoom - 0.2);
-            }
-          }}
-        >
-          <div
-            style={{
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 'bold',
-              fontSize: '1.7rem',
-              color: targetZoom <= 1.3 ? '#888' : '#000',
-              userSelect: 'none',
-            }}
-          >
-            -
-          </div>
-        </div>
-
-        <div
-          style={{
-            position: 'absolute',
-            top: '350px',
-            left: '10px',
-            width: '40px',
-            height: '40px',
-            backgroundColor: 'rgba(255,255,255,0.9)',
-            boxShadow: '2px 2px 5px rgba(0,0,0,0.3)',
-            zIndex: 1000,
-            cursor: 'pointer',
-          }}
-          onClick={() => { setLocked(prev => !prev); setManualZoom(false) }}
-        >
-          <div
-            style={{
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 'bold',
-              fontSize: '0.55rem',
-              color: '#000',
-              userSelect: 'none',
-            }}
-          >
-            {locked ? "Lock Zoom ON" : "Lock Zoom OFF"}
-          </div>
-        </div>
-
-        <div
-          style={{
-            position: 'absolute',
-            top: '400px',
             left: '10px',
             width: '40px',
             height: '40px',

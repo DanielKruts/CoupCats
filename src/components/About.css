@@ -43,7 +43,7 @@
 /* Details Section */
 
 .details-section {
-  padding: 80px 0;   /* vertical spacing */
+  padding: 60px 0;   /* vertical spacing */
   background-color: white; /* white background */
 }
 
@@ -83,7 +83,7 @@
 /* More elaboration Section */
 
 .why-section {
-  padding: 80px 0;
+  padding: 60px 0;
   background-color: white;
 }
 
@@ -124,7 +124,7 @@
 
 /* Section spacing */
 .decision-section {
-  padding: 100px 8%;
+  padding: 60px 8%;
   background: #ffffff;
 }
 
@@ -147,9 +147,11 @@
 
 /* Container */
 .decision-container {
-  display: flex;
-  gap: 40px;               /* space between cards */
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);  /* 3 equal columns */
+  gap: 40px;
+  max-width: 1200px;       /* optional: keeps it from stretching too wide */
+  margin: 0 auto;          /* center on page */
 }
 
 /* Individual cards */

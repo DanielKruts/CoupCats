@@ -48,16 +48,12 @@ const About = () =>
           </div>
         </section>
         <section className="decision-section">
-          <section className="decision-section">
-
           <div className="decision-header">
             <h2>Main Decision-Making Factors</h2>
               <p>
                 Our forecasts are guided by a balance of data, context, and expert analysis.
               </p>
           </div>
-
-        </section>
           <div className="decision-container">
             <div className="decision-card">
               <h3>Main Factor One</h3>
@@ -66,19 +62,37 @@ const About = () =>
               </p>
             </div>
 
-          <div className="decision-card">
-            <h3>Main factor two</h3>
-            <p>
-              Filler text 
-            </p>
-          </div>
+            <div className="decision-card">
+              <h3>Main factor two</h3>
+              <p>
+                Filler text 
+              </p>
+            </div>
 
-          <div className="decision-card">
-            <h3>Main factor three</h3>
-            <p>
-              Filler text
-            </p>
-          </div>
+            <div className="decision-card">
+              <h3>Main factor three</h3>
+              <p>
+                Filler text
+              </p>
+            </div>
+            <div className="decision-card">
+              <h3>Main Factor Four</h3>
+              <p>
+                Filler text
+              </p>
+            </div>
+            <div className="decision-card">
+              <h3>Main Factor Five</h3>
+              <p>
+                Filler text
+              </p>
+            </div>
+            <div className="decision-card">
+              <h3>Main Factor Six</h3>
+              <p>
+                Filler text
+              </p>
+            </div>
           </div>
         </section>
         

@@ -69,6 +69,13 @@
     text-align: left;
   }
   
+  .member-year {
+    margin: 0.3rem 0 0;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    text-align: left;
+  }
+  
   .member-bio {
     color: #555;
     font-size: 0.95rem;

@@ -56,39 +56,39 @@ const About = () =>
           </div>
           <div className="decision-container">
             <div className="decision-card">
-              <h3>Main Factor One</h3>
+              <h3>Proximity to Other Instable Countries</h3>
               <p>
                 Filler text
               </p>
             </div>
 
             <div className="decision-card">
-              <h3>Main factor two</h3>
+              <h3>Trade</h3>
               <p>
                 Filler text 
               </p>
             </div>
 
             <div className="decision-card">
-              <h3>Main factor three</h3>
+              <h3>Change in GDP per Capita</h3>
               <p>
                 Filler text
               </p>
             </div>
             <div className="decision-card">
-              <h3>Main Factor Four</h3>
+              <h3>Democracy Level</h3>
               <p>
                 Filler text
               </p>
             </div>
             <div className="decision-card">
-              <h3>Main Factor Five</h3>
+              <h3>Female Political Participation</h3>
               <p>
                 Filler text
               </p>
             </div>
             <div className="decision-card">
-              <h3>Main Factor Six</h3>
+              <h3>Protests</h3>
               <p>
                 Filler text
               </p>

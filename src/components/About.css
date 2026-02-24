@@ -59,15 +59,16 @@
 
 .details-text {
   flex: 1;                /* takes equal space */
-  font-family: 'Times New Roman', serif;
 }
 
 .details-text h2 {
   font-size: 32px;
   margin-bottom: 20px;
+  font-family: "DM Serif Text", serif;
 }
 
 .details-text p {
+  font-family: 'Times New Roman', serif;
   font-size: 18px;
   line-height: 1.6;
 }
@@ -100,17 +101,18 @@
 
 .why-text {
   flex: 1;
-  font-family: 'Times New Roman', serif;
 }
 
 .why-text h2 {
   font-size: 32px;
   margin-bottom: 20px;
+  font-family: "DM Serif Text", serif;
 }
 
 .why-text p {
   font-size: 18px;
   line-height: 1.6;
+  font-family: 'Times New Roman', serif;
 }
 
 .why-image {
@@ -134,11 +136,13 @@
 }
 
 .decision-header h2 {
+  font-family: "DM Serif Text", serif;
   font-size: 34px;
   margin-bottom: 16px;
 }
 
 .decision-header p {
+  font-family: "DM Serif Text", serif;
   max-width: 600px;
   margin: 0 auto;
   color: #666;
@@ -172,11 +176,13 @@
 
 /* Typography */
 .decision-card h3 {
+  font-family: 'Times New Roman', serif;
   margin-bottom: 16px;
   font-size: 20px;
 }
 
 .decision-card p {
+  font-family: 'Times New Roman', serif;
   color: #555;
   line-height: 1.6;
 }
